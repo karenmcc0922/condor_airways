@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Comprar Vuelo</title>
+</head>
+<body>
+    <h1>Comprar Vuelo {{ reserva.vuelo.codigo }}</h1>
+
+    <p>{{ reserva.vuelo.origen }} → {{ reserva.vuelo.destino }}</p>
+    <p>Fecha: {{ reserva.vuelo.fecha_salida }}</p>
+    <p>Precio: ${{ reserva.vuelo.precio }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar Compra</button>
+    </form>
+
+    <p><a href="{% url 'buscar_vuelos' %}">Cancelar y volver</a></p>
+
+    <a href="{% url 'checkin_vuelo' reserva.id %}">Realizar Check-In</a>
+
+</body>
+</html>

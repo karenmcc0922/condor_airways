@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Vuelos - Cóndor Airways</title>
+</head>
+<body>
+    <h1>Buscar Vuelos</h1>
+
+    <!-- Formulario para filtrar vuelos -->
+    <form method="get">
+        Origen: <input type="text" name="origen">
+        Destino: <input type="text" name="destino">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Resultados:</h2>
+    <ul>
+        {% for vuelo in vuelos %}
+            <li>
+                <b>{{ vuelo.codigo }}</b> -
+                {{ vuelo.origen }} → {{ vuelo.destino }} <br>
+                Salida: {{ vuelo.fecha_salida }} | Llegada: {{ vuelo.fecha_llegada }} <br>
+                Precio: ${{ vuelo.precio }}
+            </li>
+        {% empty %}
+            <li>No se encontraron vuelos.</li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+    {% for vuelo in vuelos %}
+        <li>
+            <b>{{ vuelo.codigo }}</b> - 
+            {{ vuelo.origen }} → {{ vuelo.destino }} <br>
+            Salida: {{ vuelo.fecha_salida }} | Llegada: {{ vuelo.fecha_llegada }} <br>
+            Precio: ${{ vuelo.precio }} <br>
+            <a href="{% url 'reservar_vuelo' vuelo.id %}">Reservar</a>
+        </li>
+    {% empty %}
+        <li>No se encontraron vuelos.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

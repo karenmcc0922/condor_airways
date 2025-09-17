@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservar Vuelo</title>
+</head>
+<body>
+    <h1>Reservar Vuelo {{ vuelo.codigo }}</h1>
+
+    <p><b>Origen:</b> {{ vuelo.origen }}</p>
+    <p><b>Destino:</b> {{ vuelo.destino }}</p>
+    <p><b>Fecha salida:</b> {{ vuelo.fecha_salida }}</p>
+    <p><b>Precio:</b> ${{ vuelo.precio }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar Reserva</button>
+    </form>
+</body>
+</html>

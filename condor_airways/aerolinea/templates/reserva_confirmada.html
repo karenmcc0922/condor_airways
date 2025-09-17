@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva confirmada</title>
+</head>
+<body>
+    <h1>Reserva creada con éxito ✅</h1>
+
+    <p><strong>ID reserva:</strong> {{ reserva.id }}</p>
+    <p><strong>Vuelo:</strong> {{ reserva.vuelo.codigo }} - {{ reserva.vuelo.origen }} → {{ reserva.vuelo.destino }}</p>
+    <p><strong>Fecha salida:</strong> {{ reserva.vuelo.fecha_salida }}</p>
+    <p><strong>Nº tiquetes:</strong> {{ reserva.num_tiquetes }}</p>
+    <p><strong>Estado:</strong> {{ reserva.estado }}</p>
+
+    <p>Ahora puede proceder a la compra:</p>
+    <a href="{% url 'comprar_vuelo' reserva.id %}">Comprar este vuelo</a>
+
+    <p><a href="{% url 'buscar_vuelos' %}">Volver a buscar vuelos</a></p>
+</body>
+</html>

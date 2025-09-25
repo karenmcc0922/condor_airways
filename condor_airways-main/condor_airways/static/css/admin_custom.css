@@ -1,0 +1,43 @@
+/* Fondo del administrador */
+body {
+    background: 
+        url("/static/img/fondo_avion.png") no-repeat right center fixed,
+        linear-gradient(135deg, #ffe6d6, #ffcba1);
+    background-size: 400px auto, cover;
+}
+
+
+
+
+/* Barra superior */
+#header {
+    background: linear-gradient(90deg, #ff8828, #b15000) !important;
+    color: #fff !important;
+}
+
+/* Título del sitio */
+#header h1, #header h1 a {
+    color: #fff !important;
+    font-weight: bold;
+}
+
+/* Sidebar y módulos */
+.module caption {
+    background: #ff8828 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+/* Botones */
+.button, input[type=submit], .submit-row input {
+    background: linear-gradient(90deg, #ff8828, #b15000) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 6px 12px;
+}
+
+.button:hover, input[type=submit]:hover, .submit-row input:hover {
+    background: linear-gradient(90deg, #e69d00, #ffbb00) !important;
+}

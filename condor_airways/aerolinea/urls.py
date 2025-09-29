@@ -16,5 +16,7 @@ urlpatterns = [
     path('admin/vuelos/', views.admin_vuelos, name='admin_vuelos'),
     path('admin/usuarios/', views.admin_usuarios, name='admin_usuarios'),
     path('admin/roles/', views.admin_roles, name='roles'),
+    path('api/next-codigo/', views.next_codigo_vuelo, name='next_codigo_vuelo'),
+    path('api/get_options/', views.get_options_vuelo, name='get_options_vuelo'),
 ]
 

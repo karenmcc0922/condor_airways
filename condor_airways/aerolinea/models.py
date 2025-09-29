@@ -1,10 +1,65 @@
 from django import forms
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, MinValueValidator
 from django.utils import timezone
 from django.contrib.auth.models import User
 import re
+import math
+from datetime import datetime, timedelta
+import pytz
+
+# Zonas horarias de los destinos internacionales
+ZONAS_HORARIAS_DESTINOS = {
+    "MADRID": "Europe/Madrid",      # UTC+1 (UTC+2 en verano)
+    "LONDRES": "Europe/London",     # UTC+0 (UTC+1 en verano)
+    "NUEVA_YORK": "America/New_York",  # UTC-5 (UTC-4 en verano)
+    "BUENOS_AIRES": "America/Argentina/Buenos_Aires",  # UTC-3
+    "MIAMI": "America/New_York",    # UTC-5 (UTC-4 en verano)
+}
+
+# Zona horaria de Colombia (origen)
+ZONA_HORARIA_COLOMBIA = "America/Bogota"  # UTC-5
+
+# Capitales principales de Colombia
+class Capital(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    lat = models.FloatField()
+    lon = models.FloatField()
+
+    class Meta:
+        ordering = ['nombre']
+        verbose_name = 'Capital'
+        verbose_name_plural = 'Capitales'
+
+    def __str__(self):
+        return self.nombre
+
+def calcular_distancia_haversine(lat1, lon1, lat2, lon2):
+    """
+    Calcula la distancia entre dos puntos usando la fórmula de Haversine
+    Retorna la distancia en kilómetros
+    """
+    # Radio de la Tierra en kilómetros
+    R = 6371.0
+    
+    # Convertir grados a radianes
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+    
+    # Diferencias
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+    
+    # Fórmula de Haversine
+    a = math.sin(dlat/2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1- a))
+    
+    # Distancia en kilómetros
+    distancia = R * c
+    return distancia
 
 # --- Tabla Rol ---
 class Rol(models.Model):
@@ -52,17 +107,200 @@ class Vuelo(models.Model):
         ("INTERNACIONAL", "Internacional"),
     ]
 
-    codigo = models.CharField(max_length=20, unique=True)
+    ORIGEN_INTERNACIONAL = [
+        ("PEREIRA", "Pereira"),
+        ("BOGOTA", "Bogotá"),
+        ("MEDELLIN", "Medellín"),
+        ("CALI", "Cali"),
+        ("CARTAGENA", "Cartagena"),
+    ]
+
+    DESTINO_INTERNACIONAL = [
+        ("MADRID", "Madrid"),
+        ("LONDRES", "Londres"),
+        ("NUEVA_YORK", "Nueva York"),
+        ("BUENOS_AIRES", "Buenos Aires"),
+        ("MIAMI", "Miami"),
+    ]
+    
+    VUELOS_NACIONALES = [
+        ("ARAUCA", "Arauca"),
+        ("ARMENIA", "Armenia"),
+        ("BARRANQUILLA", "Barranquilla"),
+        ("BOGOTA", "Bogotá"),
+        ("BUCARAMANGA", "Bucaramanga"),
+        ("CALI", "Cali"),
+        ("CARTAGENA", "Cartagena"),
+        ("CUCUTA", "Cucuta"),
+        ("FLORENCIA", "Florencia"),
+        ("IBAGUE", "Ibagué"),
+        ("INIRIDA", "Inirida"),
+        ("LETICIA", "Leticia"),
+        ("MANIZALES", "Manizales"),
+        ("MEDELLIN", "Medellín"),
+        ("MITU", "Mitú"),
+        ("MOCOA", "Mocoa"),
+        ("MONTERIA", "Montería"),
+        ("NEIVA", "Neiva"),
+        ("PASTO", "Pasto"),
+        ("PEREIRA", "Pereira"),
+        ("POPAYAN", "Popayán"),
+        ("PUERTO_CARREÑO", "Puerto Carreño"),
+        ("QUIBDO", "Quibdó"),
+        ("RIOHACHA", "Riohacha"),
+        ("SAN_ANDRES", "San Andrés"),
+        ("SAN_JOSE_DEL_GUAVIARE", "San José del Guaviare"),
+        ("SANTA_MARTA", "Santa Marta"),
+        ("SINCELEJO", "Sincelejo"),
+        ("TUNJA", "Tunja"),
+        ("VALLEDUPAR", "Valledupar"),
+        ("VILLAVICENCIO", "Villavicencio"),
+        ("YOPAL", "Yopal")
+    ]
+
+    codigo = models.CharField(max_length=20, unique=True, editable=False)
     origen = models.CharField(max_length=50)
     destino = models.CharField(max_length=50)
-    fecha_salida = models.DateTimeField()
-    fecha_llegada = models.DateTimeField()
+    fecha_salida = models.DateField(null=True, blank=True)
+    hora_salida = models.TimeField(null=True, blank=True)
+    fecha_llegada = models.DateField(blank=True, null=True)
+    hora_llegada = models.TimeField(blank=True, null=True)
+    tiempo_vuelo = models.DurationField(blank=True, null=True, help_text="Tiempo de vuelo calculado automáticamente")
     capacidad = models.IntegerField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    tipo = models.CharField(max_length=20, choices=TIPO_VUELO, default="NACIONAL")
+    precio = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        validators=[MinValueValidator(0, message="El precio no puede ser negativo")]
+    )
+    tipo = models.CharField(max_length=20, choices=TIPO_VUELO)
 
     def __str__(self):
         return f"{self.codigo} - {self.origen} → {self.destino} ({self.tipo})"
+
+    def establecer_capacidad_automatica(self):
+        """
+        Establece la capacidad automáticamente según el tipo de vuelo
+        Nacional: 150 pasajeros
+        Internacional: 250 pasajeros
+        """
+        if self.tipo == "NACIONAL":
+            self.capacidad = 150
+        elif self.tipo == "INTERNACIONAL":
+            self.capacidad = 250
+
+    def calcular_tiempo_vuelo(self):
+        """
+        Calcula el tiempo de vuelo basado en la distancia y velocidad del avión
+        """
+        try:
+            # Obtener coordenadas del origen
+            origen_capital = Capital.objects.get(nombre=self.origen)
+            
+            # Obtener coordenadas del destino
+            destino_capital = Capital.objects.get(nombre=self.destino)
+            
+            # Calcular distancia usando Haversine
+            distancia = calcular_distancia_haversine(
+                origen_capital.lat, origen_capital.lon,
+                destino_capital.lat, destino_capital.lon
+            )
+            
+            # Velocidad según tipo de vuelo
+            if self.tipo == "NACIONAL":
+                velocidad = 830  # Airbus A320 km/h
+            else:  # INTERNACIONAL
+                velocidad = 872  # Airbus A321neo km/h
+            
+            # Calcular tiempo en horas
+            tiempo_horas = distancia / velocidad
+            
+            # Convertir a timedelta
+            horas = int(tiempo_horas)
+            minutos = int((tiempo_horas - horas) * 60)
+            
+            return timedelta(hours=horas, minutes=minutos)
+            
+        except Capital.DoesNotExist:
+            return None
+        except Exception as e:
+            print(f"Error calculando tiempo de vuelo: {e}")
+            return None
+
+    def calcular_hora_local_destino(self, datetime_utc):
+        """
+        Convierte un datetime UTC a la hora local del destino
+        """
+        if self.tipo != "INTERNACIONAL" or self.destino not in ZONAS_HORARIAS_DESTINOS:
+            return datetime_utc
+        
+        try:
+            # Obtener la zona horaria del destino
+            zona_destino = pytz.timezone(ZONAS_HORARIAS_DESTINOS[self.destino])
+            
+            # Convertir UTC a hora local del destino
+            datetime_local = datetime_utc.astimezone(zona_destino)
+            
+            return datetime_local
+        except Exception as e:
+            print(f"Error calculando hora local del destino: {e}")
+            return datetime_utc
+
+    def calcular_fecha_llegada(self):
+        """
+        Calcula la fecha y hora de llegada basada en la salida y tiempo de vuelo
+        Considera las zonas horarias para vuelos internacionales
+        """
+        if not self.fecha_salida or not self.hora_salida:
+            return None, None
+            
+        tiempo_vuelo = self.calcular_tiempo_vuelo()
+        if not tiempo_vuelo:
+            return None, None
+            
+        # Crear datetime de salida en zona horaria de Colombia
+        zona_colombia = pytz.timezone(ZONA_HORARIA_COLOMBIA)
+        datetime_salida_local = datetime.combine(self.fecha_salida, self.hora_salida)
+        datetime_salida_local = zona_colombia.localize(datetime_salida_local)
+        
+        # Convertir a UTC para cálculos
+        datetime_salida_utc = datetime_salida_local.astimezone(pytz.UTC)
+        
+        # Calcular datetime de llegada en UTC
+        datetime_llegada_utc = datetime_salida_utc + tiempo_vuelo
+        
+        # Para vuelos internacionales, convertir a hora local del destino
+        if self.tipo == "INTERNACIONAL":
+            datetime_llegada_local = self.calcular_hora_local_destino(datetime_llegada_utc)
+        else:
+            # Para vuelos nacionales, mantener en hora de Colombia
+            datetime_llegada_local = datetime_llegada_utc.astimezone(zona_colombia)
+        
+        return datetime_llegada_local.date(), datetime_llegada_local.time()
+
+    def save(self, *args, **kwargs):
+        if not self.codigo:
+            prefix = "VN" if self.tipo == "NACIONAL" else "VI"
+            last = Vuelo.objects.filter(tipo=self.tipo, codigo__startswith=prefix).order_by('-codigo').first()
+            if last and last.codigo[2:].isdigit():
+                next_num = int(last.codigo[2:]) + 1
+            else:
+                next_num = 1
+            self.codigo = f"{prefix}{next_num:04d}"
+        
+        # Establecer capacidad automáticamente según el tipo de vuelo
+        self.establecer_capacidad_automatica()
+        
+        # Calcular tiempo de vuelo y fecha de llegada si no están establecidos
+        if self.fecha_salida and self.hora_salida and not self.tiempo_vuelo:
+            self.tiempo_vuelo = self.calcular_tiempo_vuelo()
+            
+        if self.fecha_salida and self.hora_salida and (not self.fecha_llegada or not self.hora_llegada):
+            fecha_llegada, hora_llegada = self.calcular_fecha_llegada()
+            if fecha_llegada and hora_llegada:
+                self.fecha_llegada = fecha_llegada
+                self.hora_llegada = hora_llegada
+            
+        super().save(*args, **kwargs)
 
 
 # --- Tabla Reserva ---

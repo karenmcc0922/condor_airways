@@ -207,12 +207,12 @@ class Vuelo(models.Model):
             
             # Velocidad según tipo de vuelo
             if self.tipo == "NACIONAL":
-                velocidad = 830  # Airbus A320 km/h
+                velocidad = 700  # Airbus A320 km/h
             else:  # INTERNACIONAL
-                velocidad = 872  # Airbus A321neo km/h
+                velocidad = 850  # Airbus A321neo km/h
             
             # Calcular tiempo en horas
-            tiempo_horas = distancia / velocidad
+            tiempo_horas = (distancia / velocidad) + 0.4
             
             # Convertir a timedelta
             horas = int(tiempo_horas)

@@ -163,12 +163,12 @@ class VueloAdmin(admin.ModelAdmin):
             
             # Velocidad según tipo (usando las mismas velocidades del modelo)
             if tipo == "NACIONAL":
-                velocidad = 830  # Airbus A320 km/h
+                velocidad = 600  # Airbus A320 km/h
             else:  # INTERNACIONAL
-                velocidad = 872  # Airbus A321neo km/h
+                velocidad = 750  # Airbus A321neo km/h
             
             # Calcular tiempo de vuelo
-            tiempo_horas = distancia / velocidad
+            tiempo_horas = (distancia / velocidad) + 0.4
             horas = int(tiempo_horas)
             minutos = int((tiempo_horas - horas) * 60)
             tiempo_vuelo = timedelta(hours=horas, minutes=minutos)

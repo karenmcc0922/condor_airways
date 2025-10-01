@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Comprar Vuelo{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+  <div class="card-body">
+    <h3 class="text-center mb-4">Confirmar Compra</h3>
+    <p><strong>Reserva:</strong> #{{ reserva.id }}</p>
+    <p><strong>Vuelo:</strong> {{ reserva.vuelo.codigo }}</p>
+    <p><strong>Origen:</strong> {{ reserva.vuelo.origen }}</p>
+    <p><strong>Destino:</strong> {{ reserva.vuelo.destino }}</p>
+    <p><strong>Precio:</strong> ${{ reserva.vuelo.precio }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+          <label for="metodo_pago" class="form-label">Método de pago</label>
+          <select name="metodo_pago" id="metodo_pago" class="form-control" required>
+              <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+              <option value="PSE">PSE</option>
+              <option value="Efectivo">Efectivo</option>
+          </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Confirmar compra</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

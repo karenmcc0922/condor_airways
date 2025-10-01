@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="text-center mb-4">Crear Cuenta</h3>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input type="text" name="username" id="username" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" name="nombre_completo" id="nombre_completo" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            <input type="date" name="fecha_nacimiento" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">DNI</label>
+            <input type="text" name="dni" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Lugar de nacimiento:</label>
+            <input type="text" name="lugar_nacimiento" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Dirección de facturación:</label>
+            <input type="text" name="direccion_facturacion"required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Género</label>
+            <select name="genero" required>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+              <option value="O">Otro</option>
+            </select>
+          <div class="mb-3">
+            <label class="form-label">Imagen de usuario (opcional):</label>
+            <input type="file" name="imagen_usuario" accept="image/*">
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success">Registrarse</button>
+          </div>
+        </form>
+        <hr>
+        <p class="text-center">
+          ¿Ya tienes cuenta? <a href="{% url 'login' %}" class="text-black">Inicia sesión</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

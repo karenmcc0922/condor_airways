@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Reservar Vuelo{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+  <div class="card-body">
+    <h3 class="text-center mb-4">Reservar Vuelo</h3>
+    <p><strong>Vuelo:</strong> {{ vuelo.codigo }}</p>
+    <p><strong>Origen:</strong> {{ vuelo.origen }}</p>
+    <p><strong>Destino:</strong> {{ vuelo.destino }}</p>
+    <p><strong>Fecha salida:</strong> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+    <p><strong>Precio:</strong> ${{ vuelo.precio }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+          <label for="num_tiquetes" class="form-label">Número de tiquetes</label>
+          <input type="number" name="num_tiquetes" id="num_tiquetes" class="form-control" min="1" max="10" value="1" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Confirmar reserva</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

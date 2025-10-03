@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Construir la ruta al archivo JSON
-        path = os.path.join(settings.BASE_DIR, 'static', 'data', 'capitals.json')
+        path = os.path.join(settings.BASE_DIR, 'aerolinea', 'fixtures', 'capitals.json')
         
         try:
             with open(path, 'r', encoding='utf-8') as f:

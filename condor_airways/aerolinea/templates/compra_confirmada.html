@@ -9,7 +9,10 @@
     <ul class="list-group my-3 text-start">
       <li class="list-group-item"><strong>Origen:</strong> {{ compra.vuelo.origen }}</li>
       <li class="list-group-item"><strong>Destino:</strong> {{ compra.vuelo.destino }}</li>
-      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ compra.vuelo.fecha_salida|date:"d/m/Y H:i" }}</li>
+      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ compra.vuelo.fecha_salida }}</li>
+      <li class="list-group-item"><strong>Hora de salida:</strong> {{ compra.vuelo.hora_salida }}</li>
+      <li class="list-group-item"><strong>Fecha de llegada (Ajustado a la hora local del destino):</strong> {{ compra.vuelo.fecha_llegada }}</li>
+      <li class="list-group-item"><strong>Hora de llegada (Ajustado a la hora local del destino):</strong> {{ compra.vuelo.hora_llegada }}</li>
       <li class="list-group-item"><strong>Código de reserva:</strong> {{ compra.codigo_reserva }}</li>
       <li class="list-group-item"><strong>Método de pago:</strong> {{ compra.metodo_pago }}</li>
       <li class="list-group-item"><strong>Estado:</strong> {{ compra.estado }}</li>

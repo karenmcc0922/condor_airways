@@ -9,7 +9,10 @@
     <ul class="list-group my-3 text-start">
       <li class="list-group-item"><strong>Origen:</strong> {{ reserva.vuelo.origen }}</li>
       <li class="list-group-item"><strong>Destino:</strong> {{ reserva.vuelo.destino }}</li>
-      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ reserva.vuelo.fecha_salida|date:"d/m/Y H:i" }}</li>
+      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ reserva.vuelo.fecha_salida }}</li>
+      <li class="list-group-item"><strong>Hora de salida:</strong> {{ reserva.vuelo.hora_salida }}</li>
+      <li class="list-group-item"><strong>Fecha de llegada (Ajustado a la hora local del destino):</strong> {{ reserva.vuelo.fecha_llegada }}</li>
+      <li class="list-group-item"><strong>Hora de llegada (Ajustado a la hora local del destino):</strong> {{ reserva.vuelo.hora_llegada }}</li>
       <li class="list-group-item"><strong>Estado:</strong> {{ reserva.estado }}</li>
       <li class="list-group-item"><strong>Tiquetes:</strong> {{ reserva.num_tiquetes }}</li>
     </ul>

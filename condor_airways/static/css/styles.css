@@ -1,0 +1,284 @@
+/* Fondo con imagen  */
+.main-content {
+    position: relative;
+    min-height: 80vh;
+    background: url("../img/fondo_avion.png") no-repeat top right;
+    background-position: right 1px top 107px;
+    background-size: 500px auto; /* ajusta el tamaño*/
+    background-attachment: fixed;
+    margin-top:5px !important;
+}
+
+/* Opcional: ajustes responsive para pantallas muy pequeñas */
+@media (max-width: 768px) {
+  body::before {
+    width: 40vw;
+    opacity: 0.06;
+    right: -10px; /* ligera corrección para móviles */
+  }
+}
+
+/* --- MODO CLARO (por defecto) --- */
+body {
+    background: linear-gradient(135deg, #ffc7a4ff, #ffa65dff);
+    background-attachment: fixed;
+    color: #222;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top:130px;
+}
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(90deg, #ff821bff, #7a3700ff);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    top:0;
+    z-index:1030;
+}
+
+.navbar .navbar-text,
+
+.navbar .nav-link {
+    color: #fff !important;
+    font-weight:500;
+    transition: color 0.3s ease;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+.navbar span {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: #ffd89f !important;
+}
+
+/* ESLOGAN */
+.hero-slogan h1 {
+    font-size:2.0rem;
+    font-weight:bold;
+    color:#7a3700ff;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+/* SUBTÍTULO */
+.hero-slogan p{
+    font-size:1.3rem;
+    color: #333;
+    font-style:italic;
+}
+
+/* CARDS */
+.card {
+    background: linear-gradient(135deg, #8b4300ff, #dd6b00ff);
+    border: none;
+    color: #fff;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+    transform:translateY(-5px);
+    transition:all 0.3s ease;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* BOTONES */
+.btn-primary {
+    background: linear-gradient(90deg, #ff841fff, #8d3f00ff);
+    border: none;
+    color: #fff;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #e68a00ff, #ff9900ff);
+}
+
+/* TABLAS */
+.table {
+    background: #ffe3caff;
+    color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.table th {
+    background: #ff8828;
+    color: #fff;
+}
+
+/* INPUTS */
+input, textarea {
+    width:100%;
+    max-width:500px;
+    margin-bottom:12px;
+    padding:10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color:#ff8828;
+    box-shadow:0 0 6px rgba(255,136,40,0.6);
+    outline:none;
+}
+
+::placeholder {
+    color:#999;
+    font-style:italic;
+}
+
+select {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+  background-color: white; /* fondo del select */
+  background-size: 16px;
+}
+
+.text-error {
+    display:inline-block;
+    color:white !important;
+    border-bottom:2px solid white;
+    padding-bottom:2px;
+    margin-top:3px;
+    font-size:0.9rem;
+}
+
+.carousel-img {
+    height:300px;
+    object-fit:cover;
+}
+
+.footer-custom {
+    background:linear-gradient(90deg, #7a3700ff, #ff821bff);
+    box-shadow:0 .3px 8px rgba(0,0,0,0.2);
+    font-size:0.9rem;
+}
+
+/* --- MODO OSCURO --- */
+body.dark-mode h2 {
+    color:#fff !important;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #494949ff, #1b1b1bff);
+    color: #eee;
+}
+
+/* NAVBAR oscuro */
+body.dark-mode .navbar {
+    background: linear-gradient(90deg, #474747ff, #1b1b1bff);
+}
+body.dark-mode .navbar .navbar-text,
+body.dark-mode .navbar .nav-link,
+body.dark-mode .navbar span {
+    color: #f0f0f0 !important;
+}
+
+/* FOOTER oscuro */
+body.dark-mode .footer-custom {
+    background: linear-gradient(90deg, #474747ff, #1b1b1bff);
+}
+
+/* CARDS oscuras */
+body.dark-mode .card {
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* BOTONES oscuros */
+body.dark-mode .btn-primary {
+    background: #444;
+    border: none;
+}
+body.dark-mode .btn-primary:hover {
+    background: #666;
+}
+
+/* TABLAS oscuras */
+body.dark-mode .table {
+    background: #1e1e1e;
+    color: #eee;
+}
+body.dark-mode .table th {
+    background: #333;
+    color: #fff;
+}
+body.dark-mode .table td {
+    border-color: #555;
+}
+
+/* INPUTS oscuros */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background: #222 !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color:#aaa !important;
+}
+
+body.dark-mode label {
+    color:#fff !important;
+}
+
+body.dark-mode button,
+body.dark-mode input[type="submit"] {
+    background:linear-gradient(90deg, #ff8828, #b15000)!important;
+    color:#fff !important;
+    border:none !important;
+    transition:background 0.3s ease;
+}
+
+body.dark-mode button:hover,
+body.dark-mode input[type="submit"]:hover {
+    background:linear-gradient(90deg, #e69d00, #ffbb00)!important;
+    color:#000 !important;
+}
+
+body.dark-mode .hero-slogan h1{
+    color:#ffb347;
+}
+
+body.dark-mode .hero-slogan p{
+    color:#fff;
+}
+
+body.dark-mode .carousel-control-prev-icon,
+body.dark-mode .carousel-control-next-icon{
+    background-color:trasparent !important;
+    border-radius:50px;
+    width:40px;
+    height:40px;
+}
+
+body.dark-mode .footer-custom,
+body.dark-mode footer{
+    background:linear-gradient(90deg,#1e1e1e, #333333) !important;
+    color:#f0f0f0 !important;
+}
+
+@media (max-width:768px){
+    .navbar-brand img{
+        height:50px;
+    }
+    .navbar .btn{
+        font-size:0.8rem;
+    }
+}

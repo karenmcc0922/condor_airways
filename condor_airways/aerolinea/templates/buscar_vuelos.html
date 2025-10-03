@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Buscar Vuelos{% endblock %}
+
+{% block content %}
+<!-- Eslogan -->
+<div class="text-center mb-4 hero-slogan">
+  <h1 class="display-5 fw-bold">"Conectando destinos, creando recuerdos"</h1>
+  <p class="lead">Cóndor Airways, tu mejor opción</p>
+</div>
+
+<!-- Carrusel -->
+<div id="carouselVuelos" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'img/avion.jpg' %}" class="d-block w-100" alt="Vuelo 1" style="height:400px; object-fit:cover;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/pereira.webp' %}" class="d-block w-100" alt="Vuelo 2" style="height:400px; object-fit:cover;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/avion2.jpg' %}" class="d-block w-100" alt="Vuelo 3" style="height:400px; object-fit:cover;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/medellin.jpg' %}" class="d-block w-100" alt="Vuelo 3" style="height:400px; object-fit:cover;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselVuelos" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselVuelos" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<h2 class="titulo text-black">Buscar Vuelos</h2>
+<form method="get" class="row g-3 mb-4">
+  <div class="col-md-5">
+    <input type="text" name="origen" class="form-control" placeholder="Ciudad de origen">
+  </div>
+  <div class="col-md-5">
+    <input type="text" name="destino" class="form-control" placeholder="Ciudad de destino">
+  </div>
+  <div class="col-md-2 d-grid">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </div>
+</form>
+
+<div class="row">
+  {% for vuelo in vuelos %}
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm border-0 bg-dark text-white">
+        <div class="card-body">
+          <!-- Código del vuelo -->
+          <h6 class="fw-bold">{{ vuelo.codigo }}</h6>
+
+          <!-- Origen y destino -->
+          <h5 class="card-title">{{ vuelo.origen }} → {{ vuelo.destino }}</h5>
+
+          <!-- Fecha -->
+          <p class="card-text">Fecha de Salida: {{ vuelo.fecha_salida|date:"d/m/Y" }} {{ vuelo.hora_salida|time:"H:i" }}</p>
+
+          <!-- Precio -->
+          <p class="card-text fw-bold">${{ vuelo.precio }}</p>
+
+          <!-- Botón reservar en verde y en negrilla -->
+          <a href="{% url 'reservar_vuelo' vuelo.id %}" class="btn btn-success w-100 fw-bold">
+            <i class="bi bi-airplane"></i> Reservar
+          </a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-center">No hay vuelos disponibles</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

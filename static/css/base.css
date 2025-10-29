@@ -1,0 +1,309 @@
+/* === VARIABLES PRINCIPALES === */
+:root {
+  --color-primary: #ff7b1c;
+  --color-secondary: #7a3700;
+  --color-accent: #ffb46b;
+  --color-light: #fff6ef;
+  --color-text: #1b1b1b;
+  --shadow: rgba(0, 0, 0, 0.25);
+  --transition: 0.4s ease;
+}
+
+/* === MODO OSCURO === */
+body.dark-mode {
+  --color-primary: #ff9e4c;
+  --color-secondary: #262626;
+  --color-accent: #ffae5a;
+  --color-light: #1a1a1a;
+  --color-text: #f2f2f2;
+  --shadow: rgba(255, 136, 40, 0.25);
+}
+
+/* === BASE === */
+body {
+  background: linear-gradient(135deg, var(--color-accent), #fff9f4);
+  color: var(--color-text);
+  font-family: 'Segoe UI', sans-serif;
+  padding-top: 130px;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* === FONDO PRINCIPAL === */
+.main-content {
+  position: relative;
+  min-height: 80vh;
+  background: url("../img/fondo_avion.png") no-repeat right top 110px;
+  background-size: 480px auto;
+  background-attachment: fixed;
+  transition: opacity 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    background: none;
+  }
+}
+
+/* === NAVBAR === */
+.navbar {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  box-shadow: 0 4px 10px var(--shadow);
+  z-index: 1030;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.navbar .nav-link,
+.navbar .navbar-text {
+  color: white !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color var(--transition);
+}
+
+.navbar .nav-link:hover {
+  color: var(--color-accent) !important;
+}
+
+/* === HERO (Eslogan) === */
+.hero-section {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  padding: 2rem 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(255, 136, 40, 0.25);
+}
+
+.hero-section h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: var(--color-light);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: color var(--transition);
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #444;
+  font-style: italic;
+}
+
+/* === CAJITA DE BÚSQUEDA === */
+.search-box {
+  background: linear-gradient(135deg, #a84900, #db6300);
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 136, 40, 0.25);
+}
+
+.search-box h3 {
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(255, 136, 40, 0.2);
+}
+
+/* Íconos en inputs (modo claro) */
+.search-box .input,
+.search-box .input-group-text {
+  background: linear-gradient(90deg, #ffa260, #7a3700);
+  color: #fff !important;
+  border: none;
+}
+
+.search-box .input-group-text i {
+  color: #fff !important;
+}
+
+.search-box input::placeholder {
+  color: #999;
+}
+
+.search-box .input-group-text:hover {
+  background: linear-gradient(90deg, #ff9b4c, #8a4a00);
+}
+
+/* === CARDS DE VUELOS === */
+.card {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+  border: none;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px var(--shadow);
+}
+
+.card h5 {
+  color: #fff;
+}
+
+.card p.text-muted {
+  color: #f5f5f5 !important;
+  font-size: 0.9rem;
+}
+
+/* === BOTONES === */
+.btn-primary,
+.btn-gradient {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background var(--transition), transform 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-gradient:hover {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #4caf50, #2e7d32);
+  border: none;
+}
+
+.btn-success:hover {
+  background: linear-gradient(90deg, #66bb6a, #388e3c);
+}
+
+/* === INPUTS Y SELECT === */
+input, textarea, select {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border var(--transition), box-shadow var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(255, 136, 40, 0.5);
+  outline: none;
+}
+
+::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* === TABLAS === */
+.table {
+  background: #fff8f2;
+  color: var(--color-text);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* === FOOTER === */
+.footer-custom {
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  box-shadow: 0 3px 8px var(--shadow);
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 15px 0;
+  transition: background var(--transition);
+}
+
+/* === MODO OSCURO === */
+body.dark-mode {
+  background: linear-gradient(135deg, #2e2e2e, #6e6e6e);
+}
+
+/* Navbar oscuro sin sombra */
+body.dark-mode .navbar {
+  background: linear-gradient(90deg, #6e6e6e, #2e2e2e);
+  box-shadow: none;
+}
+
+/* Hero oscuro */
+body.dark-mode .hero-section {
+  background: linear-gradient(135deg, #202020, #353535);
+  box-shadow: none;
+}
+
+body.dark-mode .hero-section h1 {
+  color: #ffb347 !important;
+  text-shadow: 0 0 8px rgba(255, 136, 40, 0.4);
+}
+
+body.dark-mode .hero-section p {
+  color: #ddd !important;
+}
+
+/* Cuadro de búsqueda oscuro */
+body.dark-mode .search-box {
+  background: linear-gradient(135deg, #222, #2d2d2d);
+  border: 1px solid #444;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .search-box h3 {
+  color: #ffb347 !important;
+  text-shadow: 0 0 6px rgba(255, 136, 40, 0.3);
+}
+
+body.dark-mode .search-box input,
+body.dark-mode .search-box .input-group-text {
+  background: #333 !important;
+  color: #fff !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark-mode .search-box .input-group-text i {
+  color: #ffb347 !important;
+}
+
+/* Cards oscuro */
+body.dark-mode .vuelo-card {
+  background: #1e1e1e !important;
+  border: 1px solid #444 !important;
+  color: #fff !important;
+}
+
+body.dark-mode .vuelo-card h6 {
+  color: #bbb !important;
+}
+
+body.dark-mode .vuelo-card h5 {
+  color: #ffb347 !important;
+}
+
+body.dark-mode .vuelo-card p.text-muted {
+  color: #ccc !important;
+}
+
+/* Fecha y hora vuelo oscuro */
+body.dark-mode .vuelo-card p.text-muted small,
+body.dark-mode .vuelo-card .bi-calendar-event {
+  color: #ff9900 !important;
+}
+
+/* Footer oscuro */
+body.dark-mode .footer-custom {
+  background: linear-gradient(90deg, #1e1e1e, #333);
+  box-shadow: none;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .navbar-brand img {
+    height: 50px;
+  }
+  .navbar .btn {
+    font-size: 0.8rem;
+  }
+}

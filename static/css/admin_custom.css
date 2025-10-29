@@ -1,0 +1,92 @@
+/* Fondo general */
+body {
+  background: linear-gradient(135deg, #fff5ec, #ffd8b2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Títulos con degradado */
+.text-gradient {
+  background: linear-gradient(90deg, #ff7b00, #ffb300);
+}
+
+.text-primary {
+    color: #ffecdaff !important;
+}
+
+/* Tarjeta formulario */
+.card-form {
+  border: 2px solid #ffd6a3;
+  border-radius: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-form:hover {
+  transform: scale(1.01);
+  box-shadow: 0 5px 20px rgba(255, 136, 0, 0.2);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+}
+
+/* Tabla */
+.table-header {
+  background: linear-gradient(90deg, #ff7b00, #b15000);
+}
+.fila-internacional {
+  background-color: #fff5e6;
+}
+.fila-nacional {
+  background-color: #fefcf7;
+}
+.table-hover tbody tr:hover {
+  background-color: #fff2de !important;
+}
+
+/* Botones */
+.btn-gradient {
+  background: linear-gradient(90deg, #b65800ff, #ffae00ff);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+}
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 123, 0, 0.4);
+}
+
+/* Botón flotante */
+#scrollTop {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(255, 123, 0, 0.5);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .card-form, .card-table {
+    width: 100%;
+  }
+}
+
+.titulo-vuelos {
+    color: #ff7b00;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+
+.titulo-vuelos i {
+    margin-right: 8px;
+    color: #b15000;
+}

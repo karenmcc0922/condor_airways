@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Check-In Confirmado{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <div class="card shadow p-4">
+    <h2 class="text-success mb-3">¡Check-In Completado! 🛄</h2>
+    <p>Tu check-in para el vuelo <strong>{{ checkin.compra.vuelo.codigo }}</strong> ha sido registrado correctamente.</p>
+    <ul class="list-group my-3 text-start">
+      <li class="list-group-item"><strong>Origen:</strong> {{ checkin.compra.vuelo.origen }}</li>
+      <li class="list-group-item"><strong>Destino:</strong> {{ checkin.compra.vuelo.destino }}</li>
+      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ checkin.compra.vuelo.fecha_salida }}</li>
+      <li class="list-group-item"><strong>Hora de salida:</strong> {{ checkin.vuelo.hora_salida }}</li>
+      <li class="list-group-item"><strong>Fecha de llegada (Ajustado a la hora local del destino):</strong> {{ checkin.vuelo.fecha_llegada }}</li>
+      <li class="list-group-item"><strong>Hora de llegada (Ajustado a la hora local del destino):</strong> {{ checkin.vuelo.hora_llegada }}</li>
+      <li class="list-group-item"><strong>Asiento:</strong> {{ checkin.asiento }}</li>
+    </ul>
+    <a href="{% url 'buscar_vuelos' %}" class="btn btn-outline-secondary mt-3">Volver al inicio</a>
+  </div>
+</div>
+{% endblock %}

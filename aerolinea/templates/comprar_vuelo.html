@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Comprar Vuelo{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+  <div class="card-body">
+    <h3 class="text-center mb-4">Confirmar Compra</h3>
+    <p><strong>Reserva:</strong> #{{ reserva.id }}</p>
+    <p><strong>Vuelo:</strong> {{ reserva.vuelo.codigo }}</p>
+    <p><strong>Origen:</strong> {{ reserva.vuelo.origen }}</p>
+    <p><strong>Destino:</strong> {{ reserva.vuelo.destino }}</p>
+    <p><strong>Precio:</strong> ${{ reserva.vuelo.precio }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Selecciona una tarjeta para pagar:</h3>
+        <select name="tarjeta" required>
+            <option value="">-- Selecciona una tarjeta --</option>
+            {% for t in tarjetas %}
+                <option value="{{ t.id }}">{{ t.tipo }} - **** **** **** {{ t.numero|slice:"-4:" }} (Saldo: ${{ t.saldo }})</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+        <button type="submit">Confirmar compra</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

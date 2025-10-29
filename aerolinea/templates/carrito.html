@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">🛍️ Mi Carrito de Compras</h2>
+
+{% if carrito.items.all %}
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th>Vuelo</th>
+        <th>Origen → Destino</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in carrito.items.all %}
+      <tr>
+        <td>{{ item.vuelo.codigo }}</td>
+        <td>{{ item.vuelo.origen }} → {{ item.vuelo.destino }}</td>
+        <td>${{ item.vuelo.precio }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>${{ item.vuelo.precio|floatformat:2|add:item.cantidad }}</td>
+        <td>
+          {% if item.reserva %}
+          <a href="{% url 'comprar_vuelo' item.reserva.id %}" class="btn btn-success btn-sm fw-bold">
+            Proceder al pago
+          </a>
+          {% else %}
+          <span class="text-muted">Sin reserva</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn btn-danger btn-sm fw-bold"
+            onclick="return confirm('¿Estás segur@ de eliminar esta reserva del carrito?')">
+            <i class="bi bi-trash"></i> Eliminar
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4 class="text-end mt-3">Total: ${{ total|floatformat:2 }}</h4>
+
+{% else %}
+  <p class="text-center text-muted">Tu carrito está vacío.</p>
+{% endif %}
+{% endblock %}

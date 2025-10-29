@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Compra Confirmada{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <div class="card shadow p-4">
+    <h2 class="text-success mb-3">¡Compra Realizada con Éxito! 💳</h2>
+    <p>Has comprado exitosamente tu vuelo <strong>{{ compra.vuelo.codigo }}</strong>.</p>
+    <ul class="list-group my-3 text-start">
+      <li class="list-group-item"><strong>Origen:</strong> {{ compra.vuelo.origen }}</li>
+      <li class="list-group-item"><strong>Destino:</strong> {{ compra.vuelo.destino }}</li>
+      <li class="list-group-item"><strong>Fecha de salida:</strong> {{ compra.vuelo.fecha_salida }}</li>
+      <li class="list-group-item"><strong>Hora de salida:</strong> {{ compra.vuelo.hora_salida }}</li>
+      <li class="list-group-item"><strong>Fecha de llegada (Ajustado a la hora local del destino):</strong> {{ compra.vuelo.fecha_llegada }}</li>
+      <li class="list-group-item"><strong>Hora de llegada (Ajustado a la hora local del destino):</strong> {{ compra.vuelo.hora_llegada }}</li>
+      <li class="list-group-item"><strong>Código de reserva:</strong> {{ compra.codigo_reserva }}</li>
+      <li class="list-group-item"><strong>Método de pago:</strong> {{ compra.metodo_pago }}</li>
+      <li class="list-group-item"><strong>Estado:</strong> {{ compra.estado }}</li>
+    </ul>
+    <a href="{% url 'checkin_vuelo' compra.id %}" class="btn btn-primary mt-3">Hacer Check-In</a>
+    <a href="{% url 'buscar_vuelos' %}" class="btn btn-outline-secondary mt-3">Volver al inicio</a>
+  </div>
+</div>
+{% endblock %}

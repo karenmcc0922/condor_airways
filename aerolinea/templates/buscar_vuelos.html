@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Buscar Vuelos{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Hero principal -->
+<div class="text-center mb-5 hero-section">
+  <h1 class="display-5 fw-bold">Conectando destinos, creando recuerdos</h1>
+  <p class="lead text-muted fw-bold">Encuentra tu próximo viaje con Cóndor Airways</p>
+</div>
+
+<!-- Carrusel -->
+<div id="carouselVuelos" class="carousel slide shadow-lg mb-5" data-bs-ride="carousel" data-bs-interval="3500">
+  <div class="carousel-inner rounded-4 overflow-hidden">
+    <div class="carousel-item active">
+      <img src="{% static 'img/avion.jpg' %}" class="d-block w-100" alt="Vuelo 1">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/pereira.webp' %}" class="d-block w-100" alt="Vuelo 2">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/avion2.jpg' %}" class="d-block w-100" alt="Vuelo 3">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/medellin.jpg' %}" class="d-block w-100" alt="Vuelo 4">
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de búsqueda -->
+<div class="search-box mx-auto mb-5 p-4 shadow-sm rounded-4">
+  <h3 class="text-center mb-3 fw-bold">Buscar vuelos disponibles</h3>
+  <form method="get" class="row g-3 justify-content-center">
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text bg-gradient"><i class="bi bi-geo-alt"></i></span>
+        <input type="text" name="origen" class="form-control" placeholder="Ciudad de origen">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text bg-gradient"><i class="bi bi-geo"></i></span>
+        <input type="text" name="destino" class="form-control" placeholder="Ciudad de destino">
+      </div>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-gradient fw-bold">
+        <i class="bi bi-search"></i> Buscar
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Resultados -->
+<div class="row justify-content-center">
+  {% for vuelo in vuelos %}
+    <div class="col-md-4 mb-4">
+      <div class="card vuelo-card shadow border-0 text-center">
+        
+        {% if vuelo.imagen %}
+          <img src="{{ vuelo.imagen.url }}" class="card-img-top" alt="Imagen del vuelo"
+               style="height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+        {% else %}
+          <img src="{% static 'img/avionnaranja.jpg' %}" class="card-img-top" alt="Imagen por defecto"
+               style="height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+        {% endif %}
+
+        <div class="card-body">
+          <h6 class="text-muted mb-1 fw-bold">{{ vuelo.codigo }}</h6>
+          <h5 class="fw-bold text-dark">{{ vuelo.origen }} → {{ vuelo.destino }}</h5>
+          <p class="text-muted small mb-2">
+            <i class="bi bi-calendar-event"></i>
+            {{ vuelo.fecha_salida|date:"d/m/Y" }} - {{ vuelo.hora_salida|time:"H:i" }}
+          </p>
+          <p class="fw-bold fs-5 text-gradient">${{ vuelo.precio }}</p>
+          <a href="{% url 'reservar_vuelo' vuelo.id %}" class="btn btn-success w-100 fw-bold">
+            <i class="bi bi-airplane-fill"></i> Reservar
+          </a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-center text-muted">No hay vuelos disponibles por ahora.</p>
+  {% endfor %}
+</div>
+{% endblock %}
